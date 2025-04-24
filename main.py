@@ -8,7 +8,7 @@ app = FastAPI(title="Hello World API")
 @app.get("/")
 async def read_root():
     """Returns a simple Hello World message."""
-    return {"message": "Hello World"}
+    return {"message": "Hello World."}
 
 
 @app.get("/health")
