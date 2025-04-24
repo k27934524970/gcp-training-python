@@ -59,6 +59,7 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
+          token_format: access_token
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
         # uses: 'google-github-actions/auth@f112390a2df9932162083945e46d439060d66ec2' # google-github-actions/auth@v2
@@ -66,14 +67,14 @@ jobs:
         #   workload_identity_provider: '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
 
       # BEGIN - Docker auth and build
-      #
+      
       # If you already have a container image, you can omit these steps.
-      # - name: 'Docker Auth'
-      #   uses: 'docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567' # docker/login-action@v3
-      #   with:
-      #     username: 'oauth2accesstoken'
-      #     password: '${{ steps.auth.outputs.auth_token }}'
-      #     registry: '${{ env.REGION }}-docker.pkg.dev'
+      - name: 'Docker Auth'
+        uses: 'docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567' # docker/login-action@v3
+        with:
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.auth_token }}'
+          registry: '${{ env.REGION }}-docker.pkg.dev'
 
       - name: 'Build and Push Container'
         run: |-
